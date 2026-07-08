@@ -1,0 +1,19 @@
+apiVersion: v1 ### version and group of Api
+kind: Pod  ### represents a kubernetes Api objects
+metadata:  ###  descriptive data about the api object
+  name: nginx  ###
+spec:             ### desired state
+  containers:
+    - name: nginx-container
+      image: nginx:1.14.2
+      ports:
+      - containerPort: 80
+status:
+
+### api has a bunch of objects or resources 
+### example of Api objects are:
+# pods
+# deployment
+# Replicaset
+# namespace
+# Statefulset
