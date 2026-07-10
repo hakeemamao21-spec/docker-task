@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+ 
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+Annotation:
+  kubernentes.io/change-cause: "updated image to nginx:per1"
+ 
+spec:
+  replicas: 5
+ 
+  selector:
+    matchLabels:
+      app: nginx
+ 
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+ 
+  template:
+    metadata:
+      labels:
+        app: nginx
+ 
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:perl
+ 
+          ports:
+            - containerPort: 80
+ 
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+ 
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 15
+            periodSeconds: 10
+ 
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 15
+            periodSeconds: 10
